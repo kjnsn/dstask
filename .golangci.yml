@@ -4,19 +4,16 @@ output:
 linters:
   enable:
     - goimports
-    - golint
+    - revive
     - gofmt
     - misspell
-    - deadcode
     - errcheck
     - gosimple
     - govet
     - ineffassign
     - staticcheck
-    - structcheck
     - typecheck
     - unused
-    - varcheck
     - gochecknoinits
     - unconvert
     - unparam

@@ -5,12 +5,10 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # and cd into root project dir
 cd ${DIR}/..
 
-if ! which golangci-lint &>/dev/null; then
-    # run the install from a temp dir. we don't want 'go get' updating our go.mod/go.sum files
-    dir=$(mktemp -d)
-    cd $dir
-    GO111MODULE=on go get 'github.com/golangci/golangci-lint/cmd/golangci-lint@v1.35.2'
-    cd -
+LINTCMD=$(go env GOPATH)/bin/golangci-lint
+
+if ! which LINTCMD &>/dev/null; then
+    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
 fi
 
-exec golangci-lint run --new-from-rev=490e2450418f2d55f0e912d548cbae3b1fbc8e83
+exec $LINTCMD run --new-from-rev=490e2450418f2d55f0e912d548cbae3b1fbc8e83
